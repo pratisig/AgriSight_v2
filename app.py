@@ -379,8 +379,7 @@ def calculate_crop_metrics(climate_df, indices_df, crop_params):
         metrics['yield_confidence'] = max(0, min(100, 100 - metrics['ndvi_std']*100))
         
         return metrics
-
-    def generate_crop_recommendations(metrics, culture, forecast_df=None):
+def generate_crop_recommendations(metrics, culture, forecast_df=None):
         """Génère recommandations détaillées par culture"""
         recommendations = {
             'diagnostic': [],
@@ -459,7 +458,7 @@ def calculate_crop_metrics(climate_df, indices_df, crop_params):
         recommendations['calendrier'].append(f"Cycle cultural: {metrics['cycle_days']} jours")
         recommendations['calendrier'].append(f"Rendement estimé: {metrics['yield_potential']:.1f} t/ha")
         
-        return recommendations
+        return recommendations    
 # ==================== INTERFACE PRINCIPALE ====================
 
 st.title("🌾 AgriSight Pro v2.0 - Analyse Agro-climatique Avancée")
