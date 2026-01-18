@@ -335,8 +335,7 @@ def simulate_multi_indices_data(points_list, start, end):
                 })
         
         return pd.DataFrame(all_data)
-
-    def calculate_crop_metrics(climate_df, indices_df, crop_params):
+def calculate_crop_metrics(climate_df, indices_df, crop_params):
         """Calcule métriques spécifiques à chaque culture"""
         if climate_df is None or indices_df is None or climate_df.empty or indices_df.empty:
             return {}
