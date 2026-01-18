@@ -23,27 +23,58 @@ import time
 import warnings
 import logging
 from io import BytesIO
+import sys
+import os
 
 warnings.filterwarnings('ignore')
 
-# Imports modules locaux
-from config import (
-    CUSTOM_CSS, CROP_DATABASE, OPENWEATHER_KEY, 
-    GEMINI_API_KEY, SoilType, AgroZone, ProductionLevel
-)
-from database import DatabaseManager
-from api_clients import NASAPowerClient, SentinelHubClient, OpenWeatherClient, DataValidator
-from analytics import (
-    generate_zone_id, calculate_area_hectares, create_sampling_grid,
-    simulate_indices_fallback, calculate_advanced_metrics, generate_recommendations,
-    compare_crops_performance
-)
-from ui_components import (
-    init_wizard_state, render_wizard_progress,
-    wizard_step_1_zone, wizard_step_2_context, wizard_step_3_crops,
-    wizard_step_4_advanced, wizard_step_5_summary,
-    render_metric_card, render_data_quality_badge, render_alert_box
-)
+# Ajouter le répertoire courant au path pour imports locaux
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Imports modules locaux avec gestion d'erreurs
+try:
+    from config import (
+        CUSTOM_CSS, CROP_DATABASE, OPENWEATHER_KEY, 
+        GEMINI_API_KEY, SoilType, AgroZone, ProductionLevel
+    )
+except ImportError as e:
+    st.error(f"❌ Erreur import config.py: {e}")
+    st.info("Vérifiez que config.py est dans le même dossier que app.py")
+    st.stop()
+
+try:
+    from database import DatabaseManager
+except ImportError as e:
+    st.error(f"❌ Erreur import database.py: {e}")
+    st.stop()
+
+try:
+    from api_clients import NASAPowerClient, SentinelHubClient, OpenWeatherClient, DataValidator
+except ImportError as e:
+    st.error(f"❌ Erreur import api_clients.py: {e}")
+    st.info("Vérifiez que api_clients.py est présent et que config.py est valide")
+    st.stop()
+
+try:
+    from analytics import (
+        generate_zone_id, calculate_area_hectares, create_sampling_grid,
+        simulate_indices_fallback, calculate_advanced_metrics, generate_recommendations,
+        compare_crops_performance
+    )
+except ImportError as e:
+    st.error(f"❌ Erreur import analytics.py: {e}")
+    st.stop()
+
+try:
+    from ui_components import (
+        init_wizard_state, render_wizard_progress,
+        wizard_step_1_zone, wizard_step_2_context, wizard_step_3_crops,
+        wizard_step_4_advanced, wizard_step_5_summary,
+        render_metric_card, render_data_quality_badge, render_alert_box
+    )
+except ImportError as e:
+    st.error(f"❌ Erreur import ui_components.py: {e}")
+    st.stop()
 
 # Configuration logging
 logging.basicConfig(
