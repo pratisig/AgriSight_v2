@@ -20,4 +20,5 @@ Pillow
 plotly
 google-generativeai
 reportlab
+ee
 api_clients
